@@ -1,0 +1,13 @@
+<h1>Choose your repo provider:</h1>
+
+<div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+    <ul class="list-group">
+        {{#each repo in controller.repos}}
+            <li class="list-group-item" >
+                {{#link-to config repo.slug}}
+                    <img {{bind-attr src="repo.adapter.logoURL"}} /> {{repo.name}}
+                {{/link-to}}
+            </li>
+        {{/each}}
+    </ul>
+</div>

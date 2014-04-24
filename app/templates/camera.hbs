@@ -1,0 +1,63 @@
+<h1>Camera</h1>
+
+{{#if noAdapter}}
+
+    <div>
+        <h2>No Adapter Loaded</h2>
+        <p>There doesn't seem to be an adapter loaded to connect to a cloud provider.</p>
+        <a>Click here to select your cloud provider.</a>
+    </div>    
+    
+{{else}}
+
+    {{#unless webcamFailed}}
+        <div id="live-preview">
+                
+                {{#view webcamView}}
+                    {{#if isProcessing}}
+                        <div>Active</div>
+                    {{/if}}
+                    <div id="webcam"></div>
+                {{/view}}
+                
+                
+                {{#if isProcessing}}
+                    <button {{action "stopProcessing"}} class="stop-button btn btn-lg btn-block btn-danger">Stop</button>
+                {{else}}
+                    <button {{action "startProcessing"}} class="start-button btn btn-lg btn-block btn-success">Start</button>
+                {{/if}}
+                
+        </div>
+    {{/unless}}
+    
+    {{#if webcamFailed}}
+        <div>
+            <h2>Webcam Failure</h2>
+            <p>If it was working until you adjusted some settings, try changing them back.</p>
+            <p>If you can't get it back to working, you can <a>reset to the defaults</a></p>
+            <p>If you think the error is caused by something else please take a look at the <a>support section</a>.</p>
+        </div>
+    {{/if}}
+
+    <div {{bind-attr class="isProcessing::disabled"}}>
+        <legend>Capture Settings</legend>
+        
+        <div class="form-group">           
+            <label for="minDiff">Minimum Diff</label>
+            {{input type="number" value=minDiff class="form-control" min=0 max=100 disabled=isProcessing}}
+        </div>
+        
+        <div class="form-group">
+            <label for="fps">FPS</label>
+            {{input type="number" value=fps class="form-control" min=1 max=10 disabled=isProcessing}}
+        </div>
+        
+        <div class="form-group">
+            <label for="jpegQuality">JPEG Quality</label>
+            {{input type="number" value=jpegQuality class="form-control" min=1 max=100 disabled=isProcessing}}
+        </div>
+        
+        <button {{action "applySettings"}} {{bind-attr class=":btn :btn-lg :btn-block :btn-primary" disabled=isProcessing}}>Apply Settings</button>
+    </div>
+
+{{/if}}

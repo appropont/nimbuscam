@@ -1,0 +1,37 @@
+<div id="instructions">
+    
+    <h2>Getting Started</h2>
+    <div>
+        <h3>Step 1</h3>
+        <p>Create a new S3 bucket. You could use an existing one, but from a security standpoint that isn't a good idea.</p>
+        <h3>Step 2</h3>
+        <p>Edit your CORS Configuration in the Permissions tab of your new bucket's Properties.</p>
+    </div>
+    <div>
+        <h3>Example CORS Configuration</h3>
+        <iframe src="http://pastebin.com/embed_iframe.php?i=3Qb0PCSk" style="border:none;width:100%;"></iframe>
+    </div>
+    
+</div>
+
+<legend>S3 Config</legend>
+
+<div class="form-group">
+    <label for="bucketName">Bucket Name</label>
+    {{input type="text" value=adapter.config.bucketName name="bucketName" class="form-control" placeholder="Bucket Name" }}
+</div>
+
+<div class="form-group">
+    <label for="accessKey">Access Key</label>
+    {{input type="text" value=adapter.config.accessKey name="accessKey" class="form-control" placeholder="Access Key"  }}
+</div>
+
+<div class="form-group">
+    <label for="secretKey">Secret Key</label>
+    {{input type="text" value=adapter.config.secretKey name="secretKey" class="form-control" placeholder="Secret Key"  }}
+</div>
+
+<div class="form-group">
+    <label for="subdirectory">Subdirectory (blank for root)</label>
+    {{input type="text" value=adapter.config.subdirectory name="subdirectory" class="form-control" placeholder="Subdirectory" }}
+</div>
