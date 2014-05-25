@@ -4,7 +4,7 @@
     <ul class="list-group">
         {{#each repo in controller.repos}}
             <li class="list-group-item" >
-                {{#link-to config repo.slug}}
+                {{#link-to 'config' repo.slug}}
                     <img {{bind-attr src="repo.adapter.logoURL"}} /> {{repo.name}}
                 {{/link-to}}
             </li>

@@ -19,8 +19,6 @@ app.import('vendor/ember-data/ember-data.js');
 app.import('vendor/bootstrap-sass/dist/css/bootstrap.css');
 app.import('vendor/bootstrap-sass/dist/js/bootstrap.js');
 
-app.import('vendor/js-imagediff/imagediff.js');
-
 // If the library that you are including contains AMD or ES6 modules that
 // you would like to import into your application please specify an
 // object with the list of modules as keys along with the exports of each
@@ -34,7 +32,6 @@ app.import('vendor/ic-ajax/dist/named-amd/main.js', {
     'request',
   ]
 });
-
 
 
 module.exports = app.toTree();
