@@ -1,3 +1,6 @@
+//imports
+import Ember from 'ember';
+
 var ReposController = Ember.ObjectController.extend({
     
     needs: ['config'],

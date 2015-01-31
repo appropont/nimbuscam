@@ -3,12 +3,14 @@
 /*global console */
 /*global navigator */
 /*global MediaStream */
-/*global imagediff */
 
 /*jshint -W098 */ //Prevents "defined but never used" error
 /*jshint -W083 */ //Prevents "don't define functions in a loop" error
 
+//imports
+import Ember from 'ember';
 import BaseAdapter from "../adapters/base";
+import imagediff from "../helpers/imagediff";
 
 
 var CameraController = Ember.ObjectController.extend({

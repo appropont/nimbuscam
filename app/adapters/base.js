@@ -2,6 +2,8 @@
 
 /*jshint -W098 */
 
+//imports
+import Ember from 'ember';
 
 //I am strongly considering making this extend Model instead of Object
 var BaseAdapter = Ember.Object.extend({

@@ -1,3 +1,5 @@
+//imports
+import Ember from 'ember';
 import Adapters from '../adapters';
 
 var ReposRoute = Ember.Route.extend({

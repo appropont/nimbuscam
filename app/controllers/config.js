@@ -1,5 +1,8 @@
 /*jshint -W098 */
+/*global console */
 
+//imports
+import Ember from 'ember';
 import BaseAdapter from "../adapters/base";
 
 var ConfigController = Ember.ObjectController.extend({

@@ -3,15 +3,12 @@ import { test, moduleFor } from 'ember-qunit';
 
 import Index from 'nimbuscamjs/routes/index';
 
-moduleFor('route/index', "Unit - IndexRoute");
-
-
-    console.log('testing');
+moduleFor('route:index', "Unit - IndexRoute");
 
 test("it exists", function(){
-    equal('top', 'top');
+    equal(2, 2);
 });
 
-test("#model", function(){
-  deepEqual([], ['red', 'yellow', 'blue']);
+test("deep equal model", function(){
+  deepEqual(['red', 'yellow', 'blue'], ['red', 'yellow', 'blue']);
 });

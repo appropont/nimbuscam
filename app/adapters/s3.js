@@ -2,6 +2,8 @@
 /*global AWS */
 /*global console */
 
+//imports
+import Ember from 'ember';
 import BaseAdapter from "./base";
 import DataURLToBlobHelper from "../helpers/dataURLToBlob";
 

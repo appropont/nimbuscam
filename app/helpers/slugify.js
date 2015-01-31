@@ -1,3 +1,5 @@
+/* jshint -W100 */
+
 var SlugifyHelper = {
     slugify : function(str) {
         
