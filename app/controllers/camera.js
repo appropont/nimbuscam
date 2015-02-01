@@ -245,16 +245,9 @@ var CameraController = Ember.ObjectController.extend({
         var currentFrameData = self.get('currentFrame').data.getContext('2d').getImageData(0,0,self.get('videoWidth'),self.get('videoHeight'));
         var previousFrameData = self.get('previousFrame').data.getContext('2d').getImageData(0,0,self.get('videoWidth'),self.get('videoHeight'));
         
-        var motionDetected = false;
-        try {
-            motionDetected = imagediff.equal(currentFrameData, previousFrameData, minDiffPixels);
-        } catch(e) {
-            console.log('motion detection exception');
-            console.log(e);
-        }
-        
+        var motionDetected = imagediff.equal(currentFrameData, previousFrameData, minDiffPixels);        
                 
-        if(!!motionDetected) {  
+        if(!!motionDetected && !motionDetected.error) {  
         
             console.log("MotionDetected");     
         

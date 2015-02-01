@@ -377,6 +377,21 @@
     imagediff.imageDataToPNG = imageDataToPNG;
   }
   
+  var imagediffWrapper = {
+
+    equal: function(a, b, tolerance) {
+      try {
+        var motionDetected = imagediff.equal(a, b, minDiffPixels);
+        return motionDetected;
+      } catch(e) {
+        console.log('motion detection exception');
+        console.log(e);
+        return {error: e};
+      }
+    }
+
+  };
 
 
-export default imagediff;
+
+export default imagediffWrapper;
