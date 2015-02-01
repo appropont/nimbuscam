@@ -79,8 +79,15 @@ var localAdapter = BaseAdapter.extend({
 	},
 
 	validateConfig : function() {
-		//No config to validate
-		return true;
+		var promise;
+        
+        Ember.run(function() {
+            promise = new Ember.RSVP.Promise(function(resolve, reject) {
+                resolve(true);     
+            });
+        });
+        
+        return promise;
 	},
 
 	//arg: image = { timestamp:epoch, data: dataURL }
@@ -91,7 +98,7 @@ var localAdapter = BaseAdapter.extend({
     	var promise;
 
     	Ember.run(function() {
-    		promise = Ember.RSVP.Promise(function(resolve, reject) {
+    		promise = new Ember.RSVP.Promise(function(resolve, reject) {
     			var transaction = self.db.transaction(['frame'], 'readwrite');
 			    var store = transaction.objectStore('frame');
 			    var request = store.put(image);

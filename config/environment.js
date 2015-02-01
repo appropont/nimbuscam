@@ -16,6 +16,16 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    contentSecurityPolicy: {
+      'default-src': "'none'",
+      'script-src': "'self' https://maxcdn.bootstrapcdn.com deb7local.com:35729", // Allow scripts from https://cdn.mxpnl.com
+      'font-src': "'self' http://fonts.gstatic.com http://fonts.googleapis.com https://maxcdn.bootstrapcdn.com", // Allow fonts to be loaded from http://fonts.gstatic.com
+      'connect-src': "'self' https://api.mixpanel.com http://custom-api.local ws://deb7local.com:35729", // Allow data (ajax/websocket) from api.mixpanel.com and custom-api.local
+      'img-src': "'self'",
+      'style-src': "'self' 'unsafe-inline' http://fonts.googleapis.com https://maxcdn.bootstrapcdn.com", // Allow inline styles and loaded CSS from http://fonts.googleapis.com 
+      'media-src': "'self'"
     }
   };
 

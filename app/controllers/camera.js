@@ -15,6 +15,12 @@ import imagediff from "../helpers/imagediff";
 
 var CameraController = Ember.ObjectController.extend({
 
+    /*********************************************
+     *
+     *  Properties
+     *
+     *********************************************/
+
     adapter: null,
     
     videoElement: null,
@@ -34,7 +40,7 @@ var CameraController = Ember.ObjectController.extend({
     previousFrame: null,
     currentFrame: null,
     
-    //buffer of generic frameobjects {timestamp, data}
+    //buffer of generic frameobjects {timestamp, data} used to record images prior to motion detection
     frameBuffer: [],
     
     //Configuration vars and defaults
@@ -54,10 +60,16 @@ var CameraController = Ember.ObjectController.extend({
         name: "webcamView",
         //didInsertElement is simply being used as a didLoad/ready() replacement
         didInsertElement: function() {
-            //console.log("webcamView didLoad");
+            console.log("webcamView didInsertElement");
             this.get('controller').send('startStream');
         }
     }),
+
+    /*********************************************
+     *
+     *  Computed Properties
+     *
+     *********************************************/
     
     noAdapter: function() {
     
@@ -83,6 +95,12 @@ var CameraController = Ember.ObjectController.extend({
         
     }.property('noAdapter', 'webcamFailed'),
     
+    /*********************************************
+     *
+     *  Actions
+     *
+     *********************************************/
+
     actions: {
     
         startStream: function() {
@@ -120,6 +138,8 @@ var CameraController = Ember.ObjectController.extend({
         startProcessing: function() {
         
             var self = this;
+
+            debugger;
             
             self.set('isProcessing' ,true);
             
@@ -159,6 +179,13 @@ var CameraController = Ember.ObjectController.extend({
         }
         
     },
+
+    /*********************************************
+     *
+     *  Internal Functions
+     *
+     *********************************************/
+
     //internal functions to make others readable
     processCurrentFrame: function() {
         
@@ -278,13 +305,10 @@ var CameraController = Ember.ObjectController.extend({
         
         //If maxConcurrentUploads is full leave this iteration.
         if(self.get('currentUploadCount') >= self.get('maxConcurrentUploads')) {
+            console.log('max concurrent uploads');
             return;
         }
         
-        
-        
-        //-------------------------------------------------------------------
-        //My bug is from not taking the uploadQueueCount into consideration when creating spawnCount
         
         
         var uploadQueueCount = self.get('uploadQueue').length;
@@ -313,10 +337,10 @@ var CameraController = Ember.ObjectController.extend({
                     
                     var dataURL = frame.data.toDataURL('image/jpeg', self.get('jpegQuality')/100);
                     
-                    var image = document.createElement("img");
-                    image.src = dataURL;
-                    
-                    document.getElementById('webcam').appendChild(image);
+                    //debugging
+                    //var image = document.createElement("img");
+                    //image.src = dataURL;
+                    //document.getElementById('webcam').appendChild(image);
                     
                     self.get('adapter').uploadFrame({
                     
@@ -353,12 +377,15 @@ var CameraController = Ember.ObjectController.extend({
         }
         
     },
+
+    /*********************************************
+     *  The bulk of this function is adapted from Addy Osmani's getUserMedia shim
+     *********************************************/
     getUserMedia: function(options) {
     
         var self = this;
     
         return new Ember.RSVP.Promise(function(resolve, reject) {
-            //This function is adapted from Addy Osmani's getUserMedia shim
         
             navigator.getUserMedia_  = navigator.getUserMedia ||
                                       navigator.webkitGetUserMedia ||
