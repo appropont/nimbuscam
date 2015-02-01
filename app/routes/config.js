@@ -9,11 +9,11 @@ var ConfigRoute = Ember.Route.extend({
                 return Adapters[i];
             }
         }
-        return null;
+        this.transitionTo('not-found');        
     },
     setupController: function(controller, model) {
         controller.set('adapter', model.adapter);
-        controller.send("fetchSDK");
+        controller.send('fetchSDK');
     },
     serialize: function(model) {
         return { slug: model.get('slug') };

@@ -13,11 +13,11 @@ var ReposController = Ember.ObjectController.extend({
     
     actions: {
         transitionToConfig: function(adapter) {
-            var configController = this.get("controllers.config");
-            configController.set("adapter", adapter);
+            //var configController = this.get("controllers.config");
+            //configController.set("adapter", adapter);
             
-            this.transitionToRoute("config");            
-        }        
+            this.transitionToRoute("config");     
+        }
    }
 });
 
