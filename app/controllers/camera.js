@@ -138,8 +138,6 @@ var CameraController = Ember.ObjectController.extend({
         startProcessing: function() {
         
             var self = this;
-
-            debugger;
             
             self.set('isProcessing' ,true);
             
@@ -189,7 +187,9 @@ var CameraController = Ember.ObjectController.extend({
     //internal functions to make others readable
     processCurrentFrame: function() {
         
-        var self = this;
+        var self = this,
+            videoWidth = self.get('videoWidth'),
+            videoHeight = self.get('videoHeight');
             
         //Get Current Time (microtime)
         var intervalStartTime = Date.now();
@@ -204,12 +204,13 @@ var CameraController = Ember.ObjectController.extend({
     
         //if not recording, attend the framebuffer
         if(self.get('isRecording') === false) {
-        
-            if(self.get('previousFrame') !== null) {
+            console.log('processCurrentFrame(): not recording, attending to frame buffer');
+            var previousFrame = self.get('previousFrame');
+            if(previousFrame !== null) {
                 //place old previousFrame onto buffer
-                self.get('frameBuffer').push(self.get('previousFrame'));
+                self.get('frameBuffer').push(previousFrame);
                 //remove oldest frame from buffer
-                self.get('frameBuffer').unshift();            
+                self.get('frameBuffer').shift();
             }
         }
         
@@ -217,16 +218,12 @@ var CameraController = Ember.ObjectController.extend({
         self.set('previousFrame', self.get('currentFrame'));
         
         //assign currentFrame from tempFrameCanvas
-        var currentFrame = {};
-        currentFrame.timestamp = intervalStartTime;
-        currentFrame.data = document.createElement('canvas');
-        currentFrame.data.width = self.get('videoWidth');
-        currentFrame.data.height = self.get('videoHeight');
-        currentFrame.data.getContext('2d').drawImage(
-                                                        self.get('tempFrameCanvas'),
-                                                        0,
-                                                        0
-                                                    );
+        var tempFrameCanvas = self.get('tempFrameCanvas');
+        var currentFrame = {
+            timestamp: intervalStartTime,
+            imageData: tempFrameCanvas.getContext('2d').getImageData(0,0,videoWidth,videoHeight),
+            imageDataURL: tempFrameCanvas.toDataURL('image/jpeg', self.get('jpegQuality')/100)
+        };
         self.set('currentFrame', currentFrame);
         
         //after shuffling, if either frame is null break this iteration of the interval
@@ -235,19 +232,23 @@ var CameraController = Ember.ObjectController.extend({
             return;
         }
         
-        
-        
         //converting percentage to pixels for imagediff tolerance
         var minDiffPercent = self.get('minDiff');
-        var totalPixels = self.get('videoWidth') * self.get('videoHeight');
+        var totalPixels = videoWidth * videoHeight;
         var minDiffPixels = (1/minDiffPercent) * totalPixels;
-        
-        var currentFrameData = self.get('currentFrame').data.getContext('2d').getImageData(0,0,self.get('videoWidth'),self.get('videoHeight'));
-        var previousFrameData = self.get('previousFrame').data.getContext('2d').getImageData(0,0,self.get('videoWidth'),self.get('videoHeight'));
-        
-        var motionDetected = imagediff.equal(currentFrameData, previousFrameData, minDiffPixels);        
                 
-        if(!!motionDetected && !motionDetected.error) {  
+        var motionDetected = imagediff.equal(
+            self.get('currentFrame').imageData, 
+            self.get('previousFrame').imageData, 
+            minDiffPixels
+        );   
+
+        if(motionDetected.error) {
+            console.log('Motion Detection Error. breaking processing operation');
+            return;
+        }     
+                
+        if(!!motionDetected) {  
         
             console.log("MotionDetected");     
         
@@ -312,48 +313,50 @@ var CameraController = Ember.ObjectController.extend({
             
             var spawnCount = Math.min(availableUploads, uploadQueueCount);
             
+            var uploadQueue = self.get('uploadQueue');
                         
             for(var i = 0; i < spawnCount; i++) {
-                var frame = self.get('uploadQueue').shift();
+                var frame = uploadQueue.shift();
+
+                self.set('uploadQueue', uploadQueue);
                 
                 //Check for empty frame
                 if( frame == null || 
                     typeof frame === 'undefined' || 
-                    typeof frame.data === 'undefined' 
+                    typeof frame.imageDataURL === 'undefined' 
                 ) {
                 
                     console.log('uploadInterval: frame empty');
                     
                 } else {
-                
-                    self.set('currentUploadCount', self.get('currentUploadCount') + 1);
-                    
-                    var dataURL = frame.data.toDataURL('image/jpeg', self.get('jpegQuality')/100);
-                    
-                    //debugging
-                    //var image = document.createElement("img");
-                    //image.src = dataURL;
-                    //document.getElementById('webcam').appendChild(image);
-                    
+                    var newUploadCount = self.get('currentUploadCount') + 1;
+                    self.set('currentUploadCount', newUploadCount);
+                                        
                     self.get('adapter').uploadFrame({
-                    
                         timestamp: frame.timestamp, 
-                        dataURL: dataURL
-                        
+                        dataURL: frame.imageDataURL
                     }).then(
-                        function(err) {
-                            //Still not sure whether adding failed item to front or back of queue is better
-                            self.get('uploadQueue').push(frame);                        
-                            self.set('currentUploadCount', self.get('currentUploadCount') - 1);
-                        },
                         function(data) {
                             //Upload success
-                            self.set('currentUploadCount', self.get('currentUploadCount') - 1);
+                            console.log('frame upload success');
+                            var currentUploadCount = self.get('currentUploadCount') - 1;      
+                            self.set('currentUploadCount', currentUploadCount);
+                        },
+                        function(err) {
+                            //Still not sure whether adding failed item to front or back of queue is better
+                            console.log('frame upload failed');
+                            console.log('error: ', err);
+                            self.get('uploadQueue').push(frame);  
+                            var currentUploadCount = self.get('currentUploadCount') - 1;      
+                            self.set('currentUploadCount', currentUploadCount);
                         }
                     );
  
                 }
             }
+
+
+
             
         } else {
         

@@ -381,7 +381,7 @@
 
     equal: function(a, b, tolerance) {
       try {
-        var motionDetected = imagediff.equal(a, b, minDiffPixels);
+        var motionDetected = imagediff.equal(a, b, tolerance);
         return motionDetected;
       } catch(e) {
         console.log('motion detection exception');
