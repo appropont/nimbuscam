@@ -1,8 +1,4 @@
-/*global setInterval */
-/*global clearInterval */
-/*global console */
-/*global navigator */
-/*global MediaStream */
+/*global setInterval, clearInterval, console, navigator, MediaStream*/
 
 /*jshint -W098 */ //Prevents "defined but never used" error
 /*jshint -W083 */ //Prevents "don't define functions in a loop" error

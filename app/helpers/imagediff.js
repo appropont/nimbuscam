@@ -1,3 +1,5 @@
+/*global Buffer, require*/
+
 //Modified from
             // js-imagediff 1.0.3
             // (c) 2011-2012 Carl Sutherland, Humble Software
