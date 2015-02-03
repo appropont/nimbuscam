@@ -1,28 +1,48 @@
-<div id="home">
+<div id="home" class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
 	<div class="jumbotron">
-	    <h1>Nimbuscam.js</h1>
-	    <p>A cloud-based security camera app</p>
-	     {{#link-to "repos"}}
-	     	<button id="getting-started" class="btn btn-primary btn-lg">
-	     		<i class="fa fa-arrow-circle-right"></i>
-	     		Get Started
-	     	</button> 
-	     {{/link-to}}
+		<div class="col-sm-3 centered-content-wrapper">
+			<img id="home-jumbotron-logo" src="/images/nimbuscam.png" />
+		</div>
+		<div class="col-sm-9">
+		    <h1 id="home-title">Nimbuscam.js</h1>
+		    <p>A cloud-based security camera app</p>
+	    </div>
+	    <div class="centered-content-wrapper">
+	    	{{#link-to "repos" id="getting-started" class="btn btn-success btn-lg"}}
+     			<i class="fa fa-arrow-circle-right"></i>
+     			Get Started
+	    	{{/link-to}}
+	    </div>
 	</div>
 
-	<div class="well">
-		<h2>Browser-based</h2>
-		<p>The app itself resides completely in your browser. The only server communication necessary is that of your cloud provider. Of course, you can also run the app without an internet connection and save to your local hard drive.</p>
+	<div class="well clearfix home-feature">
+		<div class="col-sm-3 home-icon-wrapper">
+			<i class="fa fa-desktop home-feature-icon"></i>
+		</div>
+		<div class="col-sm-9">
+			<h2>Browser-based</h2>
+			<p>The app itself resides completely in your browser. The only server communication necessary is that of your cloud provider. Of course, you can also run the app without an internet connection and save to your local hard drive.</p>
+		</div>
 	</div>
 
-	<div class="well">
-		<h2>How It Works</h2>
-		<p>Your webcam is accessed using the part of the WebRTC spec in HTML5. By comparing successive framegrabs the app is able to detect "motion" and begin uploading the frames to a cloud service or saving them to your local hard drive.</p>
+	<div class="well clearfix home-feature">
+		<div class="col-sm-3 home-icon-wrapper">
+			<i class="fa fa-cogs home-feature-icon"></i>
+		</div>
+		<div class="col-sm-9">
+			<h2>How It Works</h2>
+			<p>Your webcam is accessed using the part of the WebRTC spec in HTML5. By comparing successive framegrabs the app is able to detect "motion" and begin uploading the frames to a cloud service or saving them to your local hard drive.</p>
+		</div>
 	</div>
 
-	<div class="well">
-		<h2>Open Source</h2>
-	    <p>Nimbuscam.js is open source software.</p>
-	    <a href="https://github.com"><button class="btn btn-success"><i class="fa fa-github"></i>Github</button></a>
+	<div class="well clearfix home-feature">
+		<div class="col-sm-3 home-icon-wrapper">
+			<i class="fa fa-github home-feature-icon"></i>
+		</div>
+		<div class="col-sm-9">
+			<h2>Open Source</h2>
+		    <p>Nimbuscam.js is open source software and is released under the MIT license. Suggestions, bug reports, and pull requests are always welcome.</p>
+		    <a href="https://github.com/appropont/nimbuscam.js"><button class="btn btn-primary"><i class="fa fa-arrow-circle-right"></i> View Source</button></a>
+	    </div>
 	</div>
 </div>

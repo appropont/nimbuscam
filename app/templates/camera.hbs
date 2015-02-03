@@ -2,7 +2,7 @@
 
 {{#if noAdapter}}
 
-    <div>
+    <div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
         <h2>No Adapter Loaded</h2>
         <p>There doesn't seem to be an adapter loaded to connect to a cloud provider.</p>
         <a>Click here to select your cloud provider.</a>
@@ -15,7 +15,7 @@
                     
                     {{#view webcamView}}
                         {{#if isProcessing}}
-                            <div>Active</div>
+                            <div class="active-notification">Active</div>
                         {{/if}}
                         <div id="webcam"></div>
                     {{/view}}
@@ -34,14 +34,19 @@
                 <h2>Webcam Failure</h2>
                 <p>If it was working until you adjusted some settings, try changing them back.</p>
                 <p>If you can't get it back to working, you can <a>reset to the defaults</a></p>
-                <p>If you think the error is caused by something else please take a look at the <a>support section</a>.</p>
+                <p>If you think the error is caused by something else, please take a look at the <a>support section</a>.</p>
             </div>
         {{/if}}
     </div>
     <div class="col-md-3 col-lg-5">
-        <div id="camera-status">
-            <legend>Capture Status</legend>
-            Placeholder
+        <div id="capture-stats">
+            <legend>Capture Statistics</legend>
+            {{input type="checkbox" checked=resetStatsOnStart name="reset-stats" id="reset-stats"}}
+            <label for="reset-stats">Reset stats at the start of each session</label>
+            <ul class="list-group">
+                <li class="list-group-item">Motion detected: {{motionDetectedCount}}</li>
+                <li class="list-group-item">Frames uploaded: {{framesUploadedCount}}</li>
+            </ul>
         </div>
         <div id="capture-settings" {{bind-attr class="isProcessing::disabled"}}>
             <legend>Capture Settings</legend>

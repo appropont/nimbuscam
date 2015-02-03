@@ -1,1 +1,53 @@
 //Home Page
+
+#home-title {
+	margin-top: 2rem;
+}
+
+.jumbotron {
+	h1, p {
+		text-align: center
+	}
+	
+}
+
+#home-jumbotron-logo {
+	max-width: 100%;
+}
+
+.home-feature h2 {
+	text-align: center;
+}
+
+.home-icon-wrapper {
+	text-align: center;
+}
+
+.home-feature-icon {
+	font-size: 12rem;
+}
+
+@media (min-width: $screen-tablet) {
+
+	#home-title {
+		margin-top: 0;
+	}
+
+	.jumbotron {
+		padding-left: 3rem;
+		padding-right: 3rem;
+		h1, p {
+			text-align:left;
+		}
+		p {
+			padding-left: 3rem;
+		}
+	}
+
+	.home-feature h2 {
+		text-align: left;
+	}
+
+}
+
+

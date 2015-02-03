@@ -61,6 +61,11 @@ var CameraController = Ember.ObjectController.extend({
         }
     }),
 
+    //Statistics
+    resetStatsOnStart: true,
+    motionDetectedCount: 0,
+    framesUploadedCount: 0,
+
     /*********************************************
      *
      *  Computed Properties
@@ -135,7 +140,14 @@ var CameraController = Ember.ObjectController.extend({
         
             var self = this;
             
-            self.set('isProcessing' ,true);
+            self.set('isProcessing', true);
+
+            //reset stats if box is checked
+            if(self.get('resetStatsOnStart') === true) {
+                console.log('resetting stats');
+                self.set('motionDetectedCount', 0);
+                self.set('framesUploadedCount', 0);
+            }
             
             var tempFrameCanvas = document.createElement('canvas');
             tempFrameCanvas.width = self.get('videoWidth');
@@ -244,9 +256,14 @@ var CameraController = Ember.ObjectController.extend({
             return;
         }     
                 
-        if(!!motionDetected) {  
-        
-            console.log("MotionDetected");     
+        if(!!motionDetected) {
+
+            console.log("MotionDetected");  
+
+            //increment stat counter
+            var detectedCount = self.get('motionDetectedCount') + 1;
+            self.set('motionDetectedCount', detectedCount);
+           
         
             //reset keepalive countdown
             self.set('keepaliveCounter', self.get('keepaliveDuration') * self.get('fps'));
@@ -337,6 +354,9 @@ var CameraController = Ember.ObjectController.extend({
                             console.log('frame upload success');
                             var currentUploadCount = self.get('currentUploadCount') - 1;      
                             self.set('currentUploadCount', currentUploadCount);
+
+                            var framesUploadedCount = self.get('framesUploadedCount') + 1;
+                            self.set('framesUploadedCount', framesUploadedCount);
                         },
                         function(err) {
                             //Still not sure whether adding failed item to front or back of queue is better
