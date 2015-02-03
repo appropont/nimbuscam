@@ -31,7 +31,8 @@ var localAdapter = BaseAdapter.extend({
     name: "Local Storage",
     config: null,
     configTemplate: "adapters/local",
-    logoURL: "//a1.awsstatic.com/images/logos/aws_logo.png",
+    //icon from https://www.iconfinder.com/icons/62110/disk_harddrive_storage_icon#size=256 under a free for commercial use license
+    logoURL: "/images/repos/local.png",
 
     //Private Methods
 	_localStorageSupported : function() {

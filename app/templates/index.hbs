@@ -1,11 +1,28 @@
-<div class="jumbotron">
-    <h1>Nimbuscam.js</h1>
-    <p>A cloud-based security camera app</p>
-     {{#link-to "repos"}} <button>Get Started</button> {{/link-to}}
-</div>
+<div id="home">
+	<div class="jumbotron">
+	    <h1>Nimbuscam.js</h1>
+	    <p>A cloud-based security camera app</p>
+	     {{#link-to "repos"}}
+	     	<button id="getting-started" class="btn btn-primary btn-lg">
+	     		<i class="fa fa-arrow-circle-right"></i>
+	     		Get Started
+	     	</button> 
+	     {{/link-to}}
+	</div>
 
+	<div class="well">
+		<h2>Browser-based</h2>
+		<p>The app itself resides completely in your browser. The only server communication necessary is that of your cloud provider. Of course, you can also run the app without an internet connection and save to your local hard drive.</p>
+	</div>
 
-<div class="well">
-    <p>You can download the source and run it yourself.</p>
-    <a>Github</a>
+	<div class="well">
+		<h2>How It Works</h2>
+		<p>Your webcam is accessed using the part of the WebRTC spec in HTML5. By comparing successive framegrabs the app is able to detect "motion" and begin uploading the frames to a cloud service or saving them to your local hard drive.</p>
+	</div>
+
+	<div class="well">
+		<h2>Open Source</h2>
+	    <p>Nimbuscam.js is open source software.</p>
+	    <a href="https://github.com"><button class="btn btn-success"><i class="fa fa-github"></i>Github</button></a>
+	</div>
 </div>

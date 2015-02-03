@@ -1,13 +1,14 @@
-<h1>Choose your repo provider:</h1>
-
-<div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-    <ul class="list-group">
-        {{#each repo in controller.repos}}
-            <li class="list-group-item" >
-                {{#link-to 'config' repo.slug}}
-                    <img {{bind-attr src="repo.adapter.logoURL"}} /> {{repo.name}}
+<div id="repos" class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+	<div class="well">
+		<h1>Repositories</h1>
+		<p>Where would you like to save the motion-detected images?</p>
+	    <ul class="list-group">
+	        {{#each repo in controller.repos}}
+                {{#link-to "config" repo.slug class="list-group-item repo"}}
+                    <img class="repo-logo" {{bind-attr src="repo.adapter.logoURL"}} /> 
+                    <h2 class="repo-title">{{repo.name}}</h2>
                 {{/link-to}}
-            </li>
-        {{/each}}
-    </ul>
+	        {{/each}}
+	    </ul>
+	</div>
 </div>

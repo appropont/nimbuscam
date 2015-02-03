@@ -1,19 +1,19 @@
-<h1>Config</h1>
-
-{{#if sdkLoading}}    
-    <p>loading sdk...</p>    
-{{/if}}
-
-{{#if sdkLoaded}}
+<div id="config" class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
     <div class="well">
-        <form>
-            {{partial adapter.configTemplate}}
-        </form>
-        {{#unless configValidated}}
-            <button {{action "validateConfig"}} class="btn btn-primary btn-lg btn-block">Validate Settings</button>
-        {{/unless}}
-        {{#if configValidated}}
-            <button {{action "transitionToCamera"}} class="btn btn-success btn-lg btn-block">Start Camera</button>
+        <h1>Config</h1>
+        {{#if sdkLoading}}    
+            <p>Loading SDK...</p>    
+        {{/if}}
+        {{#if sdkLoaded}}
+                <form>
+                    {{partial adapter.configTemplate}}
+                </form>
+                {{#unless configValidated}}
+                    <button {{action "validateConfig"}} class="btn btn-primary btn-lg btn-block">Validate Settings</button>
+                {{/unless}}
+                {{#if configValidated}}
+                    <button {{action "transitionToCamera"}} class="btn btn-success btn-lg btn-block">Start Camera</button>
+                {{/if}}
         {{/if}}
     </div>
-{{/if}}
+</div>
