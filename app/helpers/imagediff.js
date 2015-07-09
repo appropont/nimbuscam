@@ -153,8 +153,15 @@
 
     tolerance = tolerance || 0;
 
+    //console.log('aData: ', aData);
+    //console.log('bData: ', bData);
+
     if (!equalDimensions(a, b)) return false;
-    for (i = length; i--;) if (aData[i] !== bData[i] && Math.abs(aData[i] - bData[i]) > tolerance) return false;
+    for (i = length; i--;) {
+    	var exactlyEqual = (aData[i] !== bData[i]);
+    	var absDiff = Math.abs(aData[i] - bData[i]);
+    	if (exactlyEqual && absDiff > tolerance) return false;
+    }
 
     return true;
   }

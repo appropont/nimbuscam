@@ -248,7 +248,7 @@ var CameraController = Ember.ObjectController.extend({
         var motionDetected = imagediff.equal(
             self.get('currentFrame').imageData, 
             self.get('previousFrame').imageData, 
-            minDiffPixels
+            minDiffPercent
         );   
 
         if(motionDetected.error) {
