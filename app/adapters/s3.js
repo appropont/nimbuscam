@@ -130,17 +130,10 @@ var s3Adapter = BaseAdapter.extend({
                     params: {Bucket: config.bucketName}
                 });
                 
-                var s3body = false;
-                try {
-                    s3body = DataURLToBlobHelper.dataURLToBlob(image.data);
-                } catch(error) {
-                    console.log('dataURLToBlob failed');
-                    console.log(error);
-                    reject(error);
-                    return;
-                }   
+                var s3body =  DataURLToBlobHelper.dataURLToBlob(image.dataURL);
 
                 if(s3body === false) {
+                    console.log('s3body conversion failed');
                     reject(false);
                     return false;
                 }
@@ -166,8 +159,8 @@ var s3Adapter = BaseAdapter.extend({
                         });
                     });
                 } catch(error) {
-                    reject();
-                    return;
+                    reject(error);
+                    return false;
                 }
                 
             });

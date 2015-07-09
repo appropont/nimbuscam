@@ -1,4 +1,4 @@
-/*global setInterval, clearInterval, console, navigator, MediaStream*/
+/*global setInterval, clearInterval, console, navigator, MediaStream, global*/
 
 /*jshint -W098 */ //Prevents "defined but never used" error
 /*jshint -W083 */ //Prevents "don't define functions in a loop" error
@@ -7,6 +7,7 @@
 import Ember from 'ember';
 import BaseAdapter from "../adapters/base";
 import imagediff from "../helpers/imagediff";
+
 
 
 var CameraController = Ember.ObjectController.extend({
@@ -249,61 +250,58 @@ var CameraController = Ember.ObjectController.extend({
             self.get('currentFrame').imageData, 
             self.get('previousFrame').imageData, 
             minDiffPercent
-        );   
+        );
 
-        if(motionDetected.error) {
-            console.log('Motion Detection Error. breaking processing operation');
-            return;
-        }     
-                
-        if(!!motionDetected) {
+        /* Start of new image compare */
 
-            console.log("MotionDetected");  
-
-            //increment stat counter
-            var detectedCount = self.get('motionDetectedCount') + 1;
-            self.set('motionDetectedCount', detectedCount);
-           
-        
-            //reset keepalive countdown
-            self.set('keepaliveCounter', self.get('keepaliveDuration') * self.get('fps'));
-        
-            if(self.get('isRecording') === false) {
-            
-                self.set('isRecording', true);
-                
-                if(self.get('previousFrameBuffer') !== null && typeof  self.get('previousFrameBuffer') !== 'undefined') {
-                    console.log('transferring previousFrameBuffer to uploadQueue');
-                    //transfer previousFrameBuffer to uploadQueue
-                    self.get('previousFrameBuffer').forEach(function(frame) {
-                        self.get('uploadQueue').push(frame);                                
-                    });
-                    self.set('previousFrameBuffer', []);
-                } else { console.log('previousFrameBuffer is empty'); }
-                
-                
-                //transfer previousFrame to uploadQueue
-                self.get('uploadQueue').push(self.get('previousFrame'));
-                
+        resemble(self.get('currentFrame').imageDataURL).compareTo(self.get('previousFrame').imageDataURL).onComplete(function(data) {
+            if(!data.misMatchPercentage) {
+                return;
             }
+
+            if(data.misMatchPercentage > minDiffPercent) {
+                console.log("MotionDetected");  
+
+                //increment stat counter
+                var detectedCount = self.get('motionDetectedCount') + 1;
+                self.set('motionDetectedCount', detectedCount);
+               
+                //reset keepalive countdown
+                self.set('keepaliveCounter', self.get('keepaliveDuration') * self.get('fps'));
             
-            //transfer currentFrame to uploadQueue
-            self.get('uploadQueue').push(self.get('currentFrame'));
-            
-            
-        } else {
-            
-            //decrement counter
-            self.set('keepaliveCounter', self.get('keepaliveCounter') - 1);
-        
-            if(self.get('keepaliveCounter') <= 0) {
-                self.set('isRecording', false);
-            } else {
+                if(self.get('isRecording') === false) {
+                
+                    self.set('isRecording', true);
+                    
+                    if(self.get('previousFrameBuffer') !== null && typeof  self.get('previousFrameBuffer') !== 'undefined') {
+                        console.log('transferring previousFrameBuffer to uploadQueue');
+                        //transfer previousFrameBuffer to uploadQueue
+                        self.get('previousFrameBuffer').forEach(function(frame) {
+                            self.get('uploadQueue').push(frame);                                
+                        });
+                        self.set('previousFrameBuffer', []);
+                    } else { console.log('previousFrameBuffer is empty'); }
+                    
+                    
+                    //transfer previousFrame to uploadQueue
+                    self.get('uploadQueue').push(self.get('previousFrame'));
+                    
+                }
+                
                 //transfer currentFrame to uploadQueue
                 self.get('uploadQueue').push(self.get('currentFrame'));
+            } else {
+                //decrement counter
+                self.set('keepaliveCounter', self.get('keepaliveCounter') - 1);
+            
+                if(self.get('keepaliveCounter') <= 0) {
+                    self.set('isRecording', false);
+                } else {
+                    //transfer currentFrame to uploadQueue
+                    self.get('uploadQueue').push(self.get('currentFrame'));
+                }
             }
-        
-        }
+        });   
                         
     },
     processUploadQueue: function() {
@@ -362,6 +360,7 @@ var CameraController = Ember.ObjectController.extend({
                             //Still not sure whether adding failed item to front or back of queue is better
                             console.log('frame upload failed');
                             console.log('error: ', err);
+                            console.log('failed frame: ', frame);
                             self.get('uploadQueue').push(frame);  
                             var currentUploadCount = self.get('currentUploadCount') - 1;      
                             self.set('currentUploadCount', currentUploadCount);
@@ -375,14 +374,6 @@ var CameraController = Ember.ObjectController.extend({
 
             
         } else {
-        
-            //console.log('UploadQueueCount Not Greater Than Zero');
-            //console.log('currentUploadCount');
-            //console.log(self.get('currentUploadCount'));
-            //console.log('isProcessing');
-            //console.log(self.get('isProcessing'));
-            
-        
             if(self.get('currentUploadCount') <= 0 && self.get('isProcessing') === false) {
                 clearInterval(self.get('uploadInterval'));
             }
