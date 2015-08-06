@@ -28,6 +28,9 @@ var BaseAdapter = Ember.Object.extend({
     
     uploadImage: function(config, callback) {
         throw new Error(Ember.String.fmt("%@ has to implement uploadImage() method which is required to upload images to the cloud server.", [this]));
+    },
+    getUploadedImages: function(config, callback) {
+        throw new Error(Ember.String.fmt("%@ has to implement getUploadedImages() method which is required to upload images to the cloud server.", [this]));
     }
     
 });

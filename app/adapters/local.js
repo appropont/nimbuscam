@@ -116,6 +116,41 @@ var localAdapter = BaseAdapter.extend({
 
     	return promise;
     	
+    },
+    getUploadedImages: function(config) {
+    	var self = this;
+
+    	var promise;
+
+    	Ember.run(function() {
+    		promise = new Ember.RSVP.Promise(function(resolve, reject) {
+    			var transaction = self.db.transaction('frame', IDBTransaction.READ_ONLY);
+    			var store = transaction.objectStore('frame');
+    			var items = [];
+
+    			transaction.oncomplete = function(evt) {  
+			        resolve(items);
+			    };
+
+    			var cursorRequest = store.openCursor();
+
+    			cursorRequest.onerror = function(error) {
+			        console.log('cursorRequest error: ', error);
+			        reject(error);
+			    };
+			 
+			    cursorRequest.onsuccess = function(evt) {                    
+			        var cursor = evt.target.result;
+			        if (cursor) {
+			            items.push(cursor.value);
+			            cursor.continue();
+			        }
+			    };
+
+    		});
+    	});
+
+    	return promise;
     }
 
 });
