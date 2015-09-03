@@ -12,7 +12,14 @@ var ConfigRoute = Ember.Route.extend({
         this.transitionTo('not-found');        
     },
     setupController: function(controller, model) {
+        this._super(controller, model);
         controller.set('adapter', model.adapter);
+        if(!model.adapter.config) {
+            controller.set('configValidated', true);
+        } else {   
+            controller.set('configValidated', false);
+        }
+        
         controller.send('fetchSDK');
     },
     serialize: function(model) {
