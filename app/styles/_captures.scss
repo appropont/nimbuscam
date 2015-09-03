@@ -1,0 +1,13 @@
+.capture-image {
+	max-width: 100%;
+}
+
+.capture {
+
+	transition: all 1s;
+
+	&.zoomed {
+		width: 100%;
+	}
+
+}

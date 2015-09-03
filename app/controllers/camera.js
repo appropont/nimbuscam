@@ -12,6 +12,8 @@ import imagediff from "../helpers/imagediff";
 
 var CameraController = Ember.ObjectController.extend({
 
+    needs: ['captures'],
+
     /*********************************************
      *
      *  Properties
@@ -183,6 +185,13 @@ var CameraController = Ember.ObjectController.extend({
         
         applySettings: function() {
             //console.log('applySettings Fired');
+        },
+
+        transitionToCaptures: function() {
+            var capturesController = this.get("controllers.captures");
+            capturesController.set("adapter", this.adapter);
+            console.log('cameraController adapter: ', this.adapter);
+            this.transitionToRoute("captures");            
         }
         
     },

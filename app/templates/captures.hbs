@@ -1,0 +1,20 @@
+<div id="captures" class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 clearfix">
+	<div class="well">
+		<h1>Captures</h1>
+		{{#if controller.noAdapter}}
+			<p class="">You do not have an adapter set. Please go and {{#link-to "repos"}}Choose A Cloud{{/link-to}}</p>
+		{{/if}}
+		{{#unless controller.noAdapter}}
+			<ul class="list-group clearfix">
+		        {{#each capture in controller.captures}}
+		        	<a href="#" {{action "toggleFullSizeImage" capture}} class="capture col-sm-4" {{bind-attr class="capture.isSelected:zoomed" }} >
+	                    <img class="capture-image" {{bind-attr src="capture.dataURL"}} /> 
+	                    <div class="capture-title">{{capture.timestamp}}</div>
+	                </a>
+	            {{else}}
+		    		<p>No Captures Found</p>
+		        {{/each}}
+		    </ul>
+	    {{/unless}}
+	</div>
+</div>

@@ -10,6 +10,8 @@ Router.map(function() {
     this.route('repos', {path : '/choose-cloud'});
     this.route('config', {path : '/config/:slug'});
     this.route('camera', {path : '/camera'});
+    this.route('captures', {path : '/camera/captures'});
+
 
     this.route('not-found', { path: '/*path'});
 });
