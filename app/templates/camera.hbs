@@ -46,12 +46,15 @@
             <ul class="list-group">
                 <li class="list-group-item">Motion detected: {{motionDetectedCount}}</li>
                 <li class="list-group-item">Frames uploaded: {{framesUploadedCount}}</li>
+                <li class="list-group-item captures-link-wrapper">
+                    <button class="captures-link-button btn btn-default" {{action "transitionToCaptures"}}>View Captures</button>
+                </li>
             </ul>
         </div>
         <div id="capture-settings" {{bind-attr class="isProcessing::disabled"}}>
             <legend>Capture Settings</legend>
             
-            <div class="form-group">           
+            <div class="form-group">
                 <label for="minDiff">Minimum Diff</label>
                 {{input type="number" value=minDiff class="form-control" min=0 max=100 disabled=isProcessing}}
             </div>
