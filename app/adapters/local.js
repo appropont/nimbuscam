@@ -117,6 +117,7 @@ var localAdapter = BaseAdapter.extend({
     	return promise;
     	
     },
+    
     getUploadedImages: function(config) {
     	var self = this;
 
@@ -142,7 +143,11 @@ var localAdapter = BaseAdapter.extend({
 			    cursorRequest.onsuccess = function(evt) {                    
 			        var cursor = evt.target.result;
 			        if (cursor) {
-			            items.push(cursor.value);
+				        var wrappedItem = Ember.Object.create({});
+		            	wrappedItem.set('timestamp', cursor.value.timestamp);
+		            	wrappedItem.set('dataURL', cursor.value.dataURL);
+		            	wrappedItem.set('isSelected', false);
+			            items.push(wrappedItem);
 			            cursor.continue();
 			        }
 			    };
