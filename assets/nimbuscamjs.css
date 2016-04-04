@@ -1,0 +1,66 @@
+body {
+  color: #000;
+  margin: 7rem 2rem; }
+
+h1, h2, h3, h4, h5, h6, h7 {
+  margin-top: 0; }
+
+.centered-content-wrapper {
+  text-align: center; }
+
+#home-title {
+  margin-top: 2rem; }
+
+.jumbotron h1, .jumbotron p {
+  text-align: center; }
+
+#home-jumbotron-logo {
+  max-width: 100%; }
+
+.home-feature h2 {
+  text-align: center; }
+
+.home-icon-wrapper {
+  text-align: center; }
+
+.home-feature-icon {
+  font-size: 12rem; }
+
+@media (min-width: 768px) {
+  #home-title {
+    margin-top: 0; }
+
+  .jumbotron {
+    padding-left: 3rem;
+    padding-right: 3rem; }
+    .jumbotron h1, .jumbotron p {
+      text-align: left; }
+    .jumbotron p {
+      padding-left: 3rem; }
+
+  .home-feature h2 {
+    text-align: left; }
+ }
+
+.repo-logo {
+  max-width: 20%;
+  max-height: auto;
+  display: inline;
+  display: inline-block;
+  margin-left: 2rem; }
+
+.repo-title {
+  padding-left: 3rem;
+  display: inline;
+  display: inline-block; }
+
+#live-preview {
+  text-align: center; }
+
+.capture-image {
+  max-width: 100%; }
+
+.capture {
+  transition: all 1s; }
+  .capture.zoomed {
+    width: 100%; }
