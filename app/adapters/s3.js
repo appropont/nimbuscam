@@ -28,7 +28,7 @@ var s3Adapter = BaseAdapter.extend({
     name: "Amazon S3",
     config: defaultConfig,
     configTemplate: "adapters/s3config",
-    logoURL: "/images/repos/amazon-s3.png",
+    logoURL: "images/repos/amazon-s3.png",
     
     fetchSDK: function() {
     

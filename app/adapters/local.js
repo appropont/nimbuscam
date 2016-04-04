@@ -32,7 +32,7 @@ var localAdapter = BaseAdapter.extend({
     config: null,
     configTemplate: "adapters/local",
     //icon from https://www.iconfinder.com/icons/62110/disk_harddrive_storage_icon#size=256 under a free for commercial use license
-    logoURL: "/images/repos/local.png",
+    logoURL: "images/repos/local.png",
 
     //Private Methods
 	_localStorageSupported : function() {
