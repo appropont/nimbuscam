@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'nimbuscamjs',
     environment: environment,
-    baseURL: '/Nimbuscam.js',
+    baseURL: '/nimbuscam',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
